@@ -45,7 +45,7 @@ closed-source LLMs
 
 ```bash
 git clone https://github.com/szu-tera/RankedVotingSC.git
-cd code
+cd code/lm-evaluation-harness
 
 pip install -e .
 ```
