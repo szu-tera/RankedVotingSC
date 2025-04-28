@@ -36,7 +36,7 @@ RankedVotingSC/
 ├── README.md
 ├── evaluate.py                 # evaluation script
 ├── evaluate.sh                 # command-line runner
-├── requirements.txt            # rerequired packages
+├── requirements.txt            # required packages
 └── utils.py                    # utility helpers
 ```
 
