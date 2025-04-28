@@ -21,6 +21,8 @@ Ranked Voting based Self-Consistency (RankedVotingSC) is a method that improves 
 
 ## Project Structure
 
+The repository is organized as follows:
+
 ```
 RankedVotingSC/
 ├── RankedVotingSC/             # core source package
@@ -36,7 +38,6 @@ RankedVotingSC/
 ├── evaluate.sh                 # command-line runner
 ├── requirements.txt            # rerequired packages
 └── utils.py                    # utility helpers
-
 ```
 
 ## Getting Started
