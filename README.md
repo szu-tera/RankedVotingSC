@@ -37,9 +37,9 @@ pip install -e .
 ## Evaluation
 
 First, define a task YAML file under `code/lm-evaluation-harness/lm_eval/tasks/`.  
-For example, the task configuration for **Gemma-2-9b-it** on **CommonsenseQA (CSQA)** can be found [here]() (If you need to implement a new task, please refer to [this guide](https://github.com/EleutherAI/lm-evaluation-harness/blob/main/docs/new_task_guide.md)).
+For example, the task configuration for **Gemma-2-9b-it** on **CommonsenseQA (CSQA)** can be found [here](https://github.com/szu-tera/RankedVotingSC/blob/main/lm-evaluation-harness/lm_eval/tasks/CSQA/CSQA.yaml) (If you need to implement a new task, please refer to [this guide](https://github.com/EleutherAI/lm-evaluation-harness/blob/main/docs/new_task_guide.md)).
 
-Next, we provide a step-by-step demonstration using **Gemma-2-9b-it** on the **CSQA** dataset as an example:
+Next, we provide a step-by-step demonstration using **Gemma-2-9b-it** on the **CSQA** dataset (example outputs [here](https://github.com/szu-tera/RankedVotingSC/blob/main/data/samples.json)) as an example:
 
 ---
 
