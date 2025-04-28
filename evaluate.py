@@ -23,12 +23,16 @@ from RankedVotingSC.RankBasedSC import (
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Parse command-line arguments.")
-    parser.add_argument('--cot_file', type=str, default=None, help='Path to the input file (optional).')
-    parser.add_argument('--bon_file', type=str, default=None, help='Path to the input file (optional).')
-    parser.add_argument('--sc_file', type=str, default=None, help='Path to the input file (optional).')
-    parser.add_argument('--ac_file', type=str, default=None, help='Path to the input file (optional).')
-    parser.add_argument('--args.rc_file', type=str, required=True, help='Path to the input file.')
-    parser.add_argument('--vote_output_dir', type=str, required=True, help='Directory to save outputs.')
+    parser.add_argument('--cot_file', type=str, default=None,
+                        help='Path to CoT (Chain of Thought) generation results (optional).')
+    parser.add_argument('--bon_file', type=str, default=None,
+                        help='Path to BoN (Best of N) generation results (optional).')
+    parser.add_argument('--sc_file', type=str, default=None,
+                        help='Path to SC (Self-Consistency) generation results (optional).')
+    parser.add_argument('--ac_file', type=str, default=None,
+                        help='Path to AC (Adaptive Consistency) generation results (optional).')
+    parser.add_argument('--rc_file', type=str, required=True,
+                        help='Path to the Ranked Consistency input file (required).')
 
     args = parser.parse_args()
     return args
@@ -40,7 +44,6 @@ def generate_answer_from_model(resps, index, reg):
         filtered_answer = re.search(r'is:?\s*\((\w)\)', raw_text).group(1) if re.search(r'is:?\s*\((\w)\)', raw_text) else 'invalid'
     return filtered_answer
 
-# 1. extract key
 def filter_keys(input_file):
     keys_to_keep = ["doc_id", "target", "resps"]
     
@@ -54,7 +57,6 @@ def filter_keys(input_file):
     
     return filtered_data
 
-# 2. match letters
 def match_letters(raw_text, pattern):
     """
     Input: "The most likely place where a revolving door would be used as a security measure is a bank. Banks often have revolving doors to control access and limit the number of people entering and exiting at any given time, enhancing security.  While other options might have revolving doors, their primary purpose isn't necessarily security. \n\n**So the answer is (A). The ranking of options by likelihood is: A > D > C > B > E.** \n\n\n\n"
@@ -71,32 +73,14 @@ def match_letters(raw_text, pattern):
 if __name__ == "__main__":
     args = parse_args()
     # =============evaluate CoT====================
-    # cot_result = None
-    # if args.cot_file:
-    #     cot_file = args.cot_file
-    #     filtered_cot_resps = filter_keys(cot_file)
-    #     for item in filtered_cot_resps:
-    #         resp = item['resps'][0]
-    #         answer = re.search(r'answer is [*]*\((\w)\)', resp)
-    #         if answer:
-    #             item['resps'] = list(answer.groups())
-    #         else:
-    #             item['resps'] = ['invalid']
-    #     cot_count = 0
-    #     data_len = len(filtered_cot_resps)
-    #     for item in filtered_cot_resps:
-    #         answer = item['resps']
-    #         target = item['target']
-    #         if answer[0] == target:
-    #             cot_count += 1
-    #     cot_result = cot_count / data_len
     cot_result = None
     if args.cot_file:
         filtered_cot_resps = filter_keys(args.cot_file)
         cot_count = 0
         for item in filtered_cot_resps:
-            resp = item['resps'][0]
-            match = re.search(r'answer is [*]*\((\w)\)', resp)
+            resp = item['resps'][0][0]
+            # print(item['resps'])
+            match = re.search(r'answer is:? [*]*\((\w)\)', resp)
             answer = match.group(1) if match else 'invalid'
             if answer == item['target']:
                 cot_count += 1
@@ -132,12 +116,14 @@ if __name__ == "__main__":
                 RESPONSE 5: {resp5}
                 RESPONSE 6: {resp6}
                 RESPONSE 7: {resp7}
-                Which response is the best? You should also **focus on the fomat I need** and only output the number from 0-7. The best is: {best_resp}.
+                Which response is the best? You should also **focus on the fomat I need** and only output the number from 0-7. The best is: 
         """
         all_data = []
-        with open(args.bon_file, "r") as data:
+        with open(args.bon_file, "r") as f:
                 # data = data[:50]
+                data = json.load(f)
                 for item in tqdm.tqdm(data):
+                    # print(item)
                     question = item["doc"]["question"]
                     resps = item["resps"][0]
                     full_prompt = prompt.format(
@@ -206,15 +192,13 @@ if __name__ == "__main__":
             for item in data:
                 counts = {}
                 for resp in item['resps'][0]:  
-                    match = re.search(r"So the answer is \((\w)\)", resp)
+                    match = re.search(r"answer is:? \((\w)\)", resp)
                     if match:
                         ans = match.group(1)
                     else:
                         ans = 'invalid'
                     counts[ans] = counts.get(ans, 0) + 1
-                
                 final_answer = max(counts.items(), key=lambda x: x[1])[0]
-
                 if final_answer == item['target']:
                     sc_count += 1
         sc_result = sc_count / len(data)
@@ -223,7 +207,7 @@ if __name__ == "__main__":
     if args.ac_file:
         ac_count = 0
         ac = AC(stop_criteria=BetaStoppingCriteria(0.95), max_gens = 8)
-        reg = r'[Ss]o the answer is:?\s*\((\w)\)'
+        reg = r'answer is:?\s*\((\w)\)'
         with open(args.ac_file, 'r') as f:
             data = json.load(f)
             ac_samples = []
@@ -242,14 +226,13 @@ if __name__ == "__main__":
                     'resps': item['resps'],
                     'ac_result': most_common
                 }
-            ac_samples.append(json_item)
+                ac_samples.append(json_item)
             for item in ac_samples:
                 answer = item['ac_result']
                 target = item['target']
                 if answer == target:
                     ac_count += 1
         ac_result = ac_count / len(ac_samples)
-        ...
     # =============evaluate RankBasedSC====================
     args.rc_file_dir = os.path.dirname(args.rc_file)
     # output_file = os.path.join(args.rc_file_dir, 'votes.json')
@@ -264,7 +247,6 @@ if __name__ == "__main__":
             resp = match_letters(resp, r"([A-E]) > ([A-E]) > ([A-E]) > ([A-E]) > ([A-E])")
             new_resps.append(resp)
         item['resps'] = new_resps
-    print("Extract Answer! Done!")
 
     # 3 voting
     for item in filtered_data:
@@ -282,11 +264,6 @@ if __name__ == "__main__":
         item["bcv_answer"] = bcv_answer
         item["mrr_answer"] = mrr_answer
 
-    # Save final results to votes.json
-    # with open(output_file, 'w', encoding='utf-8') as file:
-    #     json.dump(filtered_data, file, ensure_ascii=False, indent=4)
-
-    # eval
     irv_count = 0
     bcv_count = 0
     mrrv_count = 0
@@ -304,22 +281,9 @@ if __name__ == "__main__":
             bcv_count += 1
         if mrr_answer == target:
             mrrv_count += 1
-
-
-    # Output results
-    # print("-------- test -------")
-    # print("+--------+----------+")
-    # print("| Method | Accuracy |")
-    # print("+--------+----------+")
-    # print(f"| IRV    | {irv_count / data_len:.6f} |")
-    # print("+--------+----------+")
-    # print(f"| BCV    | {bcv_count / data_len:.6f} |")
-    # print("+--------+----------+")
-    # print(f"| MRR    | {mrrv_count / data_len:.6f} |")
-    # print("+--------+----------+")
-    print("-------- test -------")
-    methods = []
-    accs = []
+    # =============Output all results====================
+    methods = ['Methods']
+    accs = ['Accs']
     if cot_result is not None:
         methods.append("CoT")
         accs.append(f"{cot_result:.6f}")
