@@ -1,0 +1,45 @@
+task: CSQA-RankedVoting # Task name
+dataset_path: here1swqw/CSQA_Text_Only # Dataset on huggingface
+validation_split: validation
+test_split: validation
+output_type: generate_until
+doc_to_text: 'Please carefully read the given question. Provide a final answer and **rank all given options** based on their likelihood of being correct. Respond in the format: ‘(Reasoning steps). The most likely answer is (X). The ranking of options by likelihood is: X > Y > Z > …’. X, Y, Z… are the option labels.\nQuestion: {{question}}\nAnswer: '
+doc_to_target: '{{answer.split(''####'')[-1].strip() if answer is defined else target}}'
+num_fewshot: 8
+repeats: 8 # @k
+fewshot_config:
+  sampler: first_n
+  samples:
+  # fewshot2
+  # 1
+  - question: "What do people use to absorb extra ink from a fountain pen? Answer Choices: (A) shirt pocket (B) calligrapher’s hand (C) inkwell (D) desk drawer (E) blotter"
+    target: "The answer must be an item that can absorb ink. Of the above choices, only blotters are used to absorb ink. The most likely answer is (E). The ranking of options by likelihood is: E > C > B > A > D."
+  # 2
+  - question: "What home entertainment equipment requires cable? Answer Choices: (A) radio shack (B) substation (C) television (D) cabinet"
+    target: "The answer must require cable. Of the above choices, only television requires cable. The most likely answer is (C). The ranking of options by likelihood is: C > B > A > D."
+  # 3
+  - question: "The fox walked from the city into the forest, what was it looking for? Answer Choices: (A) pretty flowers (B) hen house (C) natural habitat (D) storybook"
+    target: "The answer must be something in the forest. Of the above choices, only natural habitat is in the forest. The most likely answer is (C). The ranking of options by likelihood is: C > B > A > D."
+  # 4
+  - question: "Sammy wanted to go to where the people were. Where might he go? Answer Choices: (A) populated areas (B) race track (C) desert (D) apartment (E) roadblock"
+    target: "The answer must be a place with a lot of people. Of the above choices, only populated areas have a lot of people. The most likely answer is (A). The ranking of options by likelihood is: A > D > B > C > E."
+  # 5
+  - question: "Where do you put your grapes just before checking out? Answer Choices: (A) mouth (B) grocery cart (C)super market (D) fruit basket (E) fruit market"
+    target: "The answer should be the place where grocery items are placed before checking out. Of the above choices, grocery cart makes the most sense for holding grocery items. The most likely answer is (B). The ranking of options by likelihood is: B > C > E > A > D."
+  # 6
+  - question: "Google Maps and other highway and street GPS services have replaced what? Answer Choices: (A) united states (B) mexico (C) countryside (D) atlas"
+    target: "The answer must be something that used to do what Google Maps and GPS services do, which is to give directions. Of the above choices, only atlases are used to give directions. The most likely answer is (D). The ranking of options by likelihood is: D > A > B > C."
+  # 7
+  - question: "Before getting a divorce, what did the wife feel who was doing all the work? Answer Choices: (A) harder (B) anguish (C) bitterness (D) tears (E) sadness"
+    target: "The answer should be the feeling of someone getting divorced who was doing all the work. Of the above choices, the closest feeling is bitterness. The most likely answer is (C). The ranking of options by likelihood is: C > B > E > D > A."
+  # 8
+  - question: "Too many people want exotic snakes. The demand is driving what to carry them? (A) ditch (B) shop (C) north america (D) pet shops (E) outdoors"
+    target: "The answer should be the place or entity that would likely carry exotic snakes due to high demand. The most likely answer is (D). The ranking of options by likelihood is: D > B > E > C > A."
+metric_list:
+- aggregation: mean
+  higher_is_better: true
+  ignore_case: true
+  ignore_punctuation: false
+generation_kwargs:
+  do_sample: true
+  temperature: 0.7
