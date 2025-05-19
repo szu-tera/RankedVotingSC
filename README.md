@@ -2,7 +2,10 @@
   
 # Ranked Voting based Self-Consistency of Large Language Models
 
-[![Paper](https://img.shields.io/badge/arxiv-A42C25?style=for-the-badge&logo=arxiv&logoColor=white)]([[https://arxiv.org/abs/2504.16084](https://arxiv.org/abs/2505.10772)](https://arxiv.org/abs/2505.10772))  [![Github](https://img.shields.io/badge/GitHub-000000?style=for-the-badge&logo=github&logoColor=000&logoColor=white)]([https://github.com/szu-tera/RankedVotingSC](https://github.com/szu-tera/RankedVotingSC))
+
+[![Paper](https://img.shields.io/badge/paper-A42C25?style=for-the-badge&logo=arxiv&logoColor=white)](https://arxiv.org/abs/2505.10772)  [![Github](https://img.shields.io/badge/code-000000?style=for-the-badge&logo=github&logoColor=000&logoColor=white)](https://github.com/szu-tera/RankedVotingSC)
+
+
 
 <div align="center" style="font-family: Arial, sans-serif;">
   <p>
