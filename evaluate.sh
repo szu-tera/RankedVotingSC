@@ -4,3 +4,4 @@ python evaluate.py \
     --sc_file data/sc_samples.json \
     --ac_file data/ac_samples.json \
     --rc_file data/rc_samples.json \
+    

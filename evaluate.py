@@ -88,7 +88,6 @@ if __name__ == "__main__":
     # =============evaluate BoN====================
     bon_result = None
     if args.bon_file:
-        # model_id = "Qwen/Qwen2.5-7B-Instruct"
         model_id = "/mnt/d/share/models/Qwen2.5/qwen2.5-instruct-7B"
 
         tokenizer = AutoTokenizer.from_pretrained(model_id)
