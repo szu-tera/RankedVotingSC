@@ -28,7 +28,7 @@
 
 ## 🎉 News
 
-- **[2025/05/16]** We release our Paper on arXiv.
+- **[2025/05/16]** We release our paper on arXiv.
 
 - **[2025/05/15]** Our paper is accepted by ACL 2025 as Findings. 
 
