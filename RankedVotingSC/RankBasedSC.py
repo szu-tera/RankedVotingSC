@@ -1,5 +1,6 @@
 from collections import Counter
 
+# Base class for rank-based voting systems
 class RankBasedSC:
     def __init__(self, resps):
         self.resps = [resp for resp in resps if "invalid" not in resp]
