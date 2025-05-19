@@ -1,16 +1,37 @@
+<div align="center">
+  
 # Ranked Voting based Self-Consistency of Large Language Models
 
-## Quick Links
+[![Paper](https://img.shields.io/badge/arxiv-A42C25?style=for-the-badge&logo=arxiv&logoColor=white)]([https://arxiv.org/abs/2504.16084](https://arxiv.org/abs/2505.10772))  [![Github](https://img.shields.io/badge/GitHub-000000?style=for-the-badge&logo=github&logoColor=000&logoColor=white)]([https://github.com/PRIME-RL/TTRL](https://github.com/szu-tera/RankedVotingSC))
 
-- [Overview](#overview)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Evaluation](#evaluation)
-  - [Step 1: Generate Model Outputs](#step-1-generate-model-outputs)
-  - [Step 2: Perform Ranked Voting and Evaluation](#step-2-perform-ranked-voting-and-evaluation)
-  - [Expected Output](#expected-output)
+<div align="center" style="font-family: Arial, sans-serif;">
+  <p>
+    <a href="#news" style="text-decoration: none; font-weight: bold;">🎉 News</a> •
+    <a href="#overview" style="text-decoration: none; font-weight: bold;">📌 Overview</a> •
+    <a href="#project-structure" style="text-decoration: none; font-weight: bold;">📁 Project Structure</a>
+  </p>
+  <p>
+    <a href="#getting-started" style="text-decoration: none; font-weight: bold;">✨ Getting Started</a> •
+    <a href="#evaluation" style="text-decoration: none; font-weight: bold;">📃 Evaluation</a> •
+    <a href="#contact" style="text-decoration: none; font-weight: bold;">📨 Contact</a> •
+    <a href="#citation" style="text-decoration: none; font-weight: bold;">🎈 Citation</a>
+  </p>
+</div>
 
-## Overview
+</div>
+
+
+
+
+## 🎉 News
+
+- **[2025/05/16]** We Released our Paper on arXiv.
+
+- **[2025/05/15]** Our paper is accepted by ACL 2025 as Findings. 
+
+- **[2025/04/28]** We release our code for RankedVotingSC.
+
+## 📌Overview
 
 Ranked Voting based Self-Consistency (RankedVotingSC) is a method that improves large language models’ reasoning by generating ranked answers and applying ranked voting across multiple outputs. Experiments on multiple-choice and open-ended QA tasks show that RankedVotingSC outperforms traditional majority voting by producing more reliable final answers.
 
@@ -19,7 +40,7 @@ Ranked Voting based Self-Consistency (RankedVotingSC) is a method that improves 
 </p>
 
 
-## Project Structure
+## 📁Project Structure
 
 The repository is organized as follows:
 
@@ -40,7 +61,7 @@ RankedVotingSC/
 └── utils.py                    # utility helpers
 ```
 
-## Getting Started
+## ✨Getting Started
 
 Clone our repository and install the required environment:
 
@@ -57,7 +78,7 @@ cd lm-evaluation-harness
 pip install -e .
 ```
 
-## Evaluation
+## 📃Evaluation
 
 First, define a task YAML file under `code/lm-evaluation-harness/lm_eval/tasks/`.  
 For example, the task configuration for **Gemma-2-9b-it** on **CommonsenseQA (CSQA)** can be found [here](https://github.com/szu-tera/RankedVotingSC/blob/main/lm-evaluation-harness/lm_eval/tasks/CSQA/CSQA.yaml) (If you need to implement a new task, please refer to [this guide](https://github.com/EleutherAI/lm-evaluation-harness/blob/main/docs/new_task_guide.md)).
@@ -149,11 +170,11 @@ Arguments for the evaluation script are as follows,
 +---------+----------+----------+----------+----------+----------+----------+----------+
 ```
 
-## Contact
+## 📨Contact
 
 - Weiqin Wang: here1swqw@gmail.com
 
-## Citation
+## 🎈Citation
 
 If you find this repository useful for your research, please consider citing our paper:
 
