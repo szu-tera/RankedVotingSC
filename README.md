@@ -182,14 +182,11 @@ Arguments for the evaluation script are as follows,
 If you find this repository useful for your research, please consider citing our paper:
 
 ```bibtex
-@misc{wang2025rankedvotingbasedselfconsistency,
-      title={Ranked Voting based Self-Consistency of Large Language Models}, 
-      author={Weiqin Wang and Yile Wang and Hui Huang},
-      year={2025},
-      eprint={2505.10772},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2505.10772}, 
+@article{wang2025ranked,
+  title={Ranked Voting based Self-Consistency of Large Language Models},
+  author={Wang, Weiqin and Wang, Yile and Huang, Hui},
+  journal={arXiv preprint arXiv:2505.10772},
+  year={2025}
 }
 ```
 
