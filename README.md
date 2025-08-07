@@ -183,11 +183,25 @@ Arguments for the evaluation script are as follows,
 If you find this repository useful for your research, please consider citing our paper:
 
 ```bibtex
-@article{wang2025ranked,
-  title={Ranked Voting based Self-Consistency of Large Language Models},
-  author={Wang, Weiqin and Wang, Yile and Huang, Hui},
-  journal={arXiv preprint arXiv:2505.10772},
-  year={2025}
+@inproceedings{wang-etal-2025-ranked,
+    title = "Ranked Voting based Self-Consistency of Large Language Models",
+    author = "Wang, Weiqin  and
+      Wang, Yile  and
+      Huang, Hui",
+    editor = "Che, Wanxiang  and
+      Nabende, Joyce  and
+      Shutova, Ekaterina  and
+      Pilehvar, Mohammad Taher",
+    booktitle = "Findings of the Association for Computational Linguistics: ACL 2025",
+    month = jul,
+    year = "2025",
+    address = "Vienna, Austria",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2025.findings-acl.744/",
+    doi = "10.18653/v1/2025.findings-acl.744",
+    pages = "14410--14426",
+    ISBN = "979-8-89176-256-5",
+    abstract = "Majority voting is considered an effective method to enhance chain-of-thought reasoning, as it selects the answer with the highest ``self-consistency'' among different reasoning paths (Wang et al., 2023). However, previous chain-of-thought reasoning methods typically generate only a single answer in each trial, thereby ignoring the possibility of other potential answers. As a result, these alternative answers are often overlooked in subsequent voting processes. In this work, we propose to generate ranked answers in each reasoning process and conduct ranked voting among multiple ranked answers from different responses, thereby making the overall self-consistency more reliable. Specifically, we use three ranked voting methods: Instant-runoff voting, Borda count voting, and mean reciprocal rank voting. We validate our methods on six datasets, including three multiple-choice and three open-ended question-answering tasks, using both advanced open-source and closed-source large language models. Extensive experimental results indicate that our proposed method outperforms the baselines, showcasing the potential of leveraging the information of ranked answers and using ranked voting to improve reasoning performance. Code and logs will be released."
 }
 ```
 
